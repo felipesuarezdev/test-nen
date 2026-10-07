@@ -1,0 +1,756 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Test de Nen</title><meta name="description" content="Descubre tu tipo de Nen y tu posición en el hexagrama: test de 51 preguntas inspirado en Hunter x Hunter."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+/* Layout: un solo rollo vertical de 680px. El hexagrama es el instrumento que se repite en portada y resultado;
+   tinta índigo sobre papel pálido de día, oro sobre papel índigo de noche (sutras konshi kinji). */
+:root{
+  --paper:#EDF0F6; --paper-2:#F9FAFD; --ink:#16203C; --ink-2:#3F4B6E; --ink-3:#5F6B8C; --rule:#C8D0E0;
+  --gold:#85590A; --gold-fill:#B58A24; --seal:#B03A2E; --seal-ink:#FBF3EC;
+  --water:#A9C4E8; --water-alt:#D7B463; --leaf:#4E7D3A;
+  --font-display:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",Georgia,serif;
+  --font-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1730; --paper-2:#172140; --ink:#ECE6D3; --ink-2:#AEB5CB; --ink-3:#7F89A9; --rule:#2A3660;
+    --gold:#DDB85F; --gold-fill:#C9A244; --seal:#C94B3E; --seal-ink:#FFF4EC;
+    --water:#34558F; --water-alt:#A98A3C; --leaf:#8FBF6C; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1730; --paper-2:#172140; --ink:#ECE6D3; --ink-2:#AEB5CB; --ink-3:#7F89A9; --rule:#2A3660;
+  --gold:#DDB85F; --gold-fill:#C9A244; --seal:#C94B3E; --seal-ink:#FFF4EC;
+  --water:#34558F; --water-alt:#A98A3C; --leaf:#8FBF6C; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:680px;margin-inline:auto;padding-inline:20px;padding-block:28px 72px;display:flex;flex-direction:column;gap:28px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+a{color:var(--gold);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+.mast{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:12px}
+.mast-k{margin:0;font-family:var(--font-display);font-weight:700;font-size:21px;color:var(--gold);letter-spacing:.08em}
+.mast-n{margin:0;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);font-weight:500}
+
+h1,h2,h3{font-family:var(--font-display);font-weight:700;text-wrap:balance;margin:0;line-height:1.25}
+h1{font-size:clamp(28px,6.2vw,40px);letter-spacing:-.005em}
+h2{font-size:24px}
+h3{font-size:17px;font-family:var(--font-body);font-weight:700}
+p{margin:0}
+.lead{font-size:19px;color:var(--ink-2)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.stack-l{display:flex;flex-direction:column;gap:28px}
+.note{font-size:15px;color:var(--ink-2)}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+
+.btn{appearance:none;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font:500 16px var(--font-body);padding:12px 22px;border-radius:3px;cursor:pointer}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost:hover{border-color:var(--ink-3)}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* portada */
+.parts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.parts li{background:var(--paper);padding:14px 16px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.parts .r{font-family:var(--font-display);font-weight:800;color:var(--gold);font-size:17px}
+.parts .n{font-weight:700}
+.parts .d{font-size:14px;color:var(--ink-2)}
+@media (max-width:460px){.parts{grid-template-columns:1fr}}
+
+figure{margin:0;display:flex;flex-direction:column;gap:10px}
+figcaption{font-size:14px;color:var(--ink-2)}
+.hex{width:100%;max-width:470px;height:auto;display:block;margin-inline:auto}
+.hx-outer{fill:var(--paper-2);stroke:var(--ink-3);stroke-width:1.5}
+.hx-ring{fill:none;stroke:var(--rule);stroke-width:1}
+.hx-spoke{stroke:var(--rule);stroke-width:1}
+.hx-v{fill:var(--paper);stroke:var(--ink-3);stroke-width:1.5}
+.hx-v.is-type{fill:var(--ink);stroke:var(--ink)}
+.hx-k{font-family:var(--font-display);font-weight:700;font-size:13px;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.hx-k.is-type{fill:var(--paper)}
+.hx-name{font-family:var(--font-body);font-weight:500;font-size:13px;fill:var(--ink)}
+.hx-eff{font-family:var(--font-body);font-size:12px;fill:var(--ink-2);font-variant-numeric:tabular-nums}
+.hx-lean{stroke:var(--gold-fill);stroke-width:5;stroke-linecap:round;fill:none}
+.hx-aura{stroke:var(--gold-fill);stroke-width:1.5;fill:none}
+.hx-dot{fill:var(--gold-fill);stroke:var(--paper-2);stroke-width:2.5}
+.key{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--ink-2);justify-content:center}
+.key span{display:inline-flex;align-items:center;gap:7px}
+.key i{display:inline-block;width:12px;height:12px;border-radius:50%}
+.key .k-type{background:var(--ink)}
+.key .k-pos{background:var(--gold-fill)}
+.key .k-lean{width:18px;height:5px;border-radius:3px;background:var(--gold-fill)}
+
+/* progreso */
+.prog{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--paper);padding-block:10px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule)}
+.prog-top{display:flex;justify-content:space-between;gap:12px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:500}
+.prog-top b{font-weight:700;color:var(--ink)}
+.prog-n{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.segs{display:flex;gap:4px}
+.seg{height:4px;background:var(--rule);border-radius:2px;overflow:hidden;min-width:0}
+.seg i{display:block;height:100%;background:var(--ink);border-radius:2px}
+
+/* preguntas */
+.q{display:flex;flex-direction:column;gap:20px}
+.q-hint{font-size:15px;color:var(--ink-2)}
+fieldset{border:0;margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:10px}
+legend{padding:0}
+.q-text{font-family:var(--font-display);font-weight:700;font-size:clamp(22px,4.8vw,27px);line-height:1.3;text-wrap:balance;margin-bottom:10px;outline:none}
+.q-num{font-family:var(--font-body);font-size:13px;font-weight:700;color:var(--gold);letter-spacing:.08em;display:block;margin-bottom:6px;font-variant-numeric:tabular-nums}
+.opt{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);cursor:pointer;position:relative}
+.opt:hover{border-color:var(--ink-3)}
+.opt input,.pt input{position:absolute;opacity:0;width:1px;height:1px}
+.opt-mark{flex:none;width:16px;height:16px;border-radius:50%;border:1.5px solid var(--ink-3);margin-top:5px}
+.opt input:checked + .opt-mark{background:var(--ink);border-color:var(--ink);box-shadow:inset 0 0 0 3px var(--paper-2)}
+.opt:has(input:checked){border-color:var(--ink)}
+.opt:has(input:focus-visible),.pt:has(input:focus-visible) .pt-b{outline:2px solid var(--gold);outline-offset:2px}
+.opt-t{min-width:0}
+.lk-row{padding-block:18px;border-top:1px solid var(--rule)}
+.lk-row:first-child{border-top:0;padding-top:0}
+.lk{gap:12px}
+.lk-t{font-size:18px;font-weight:500;line-height:1.45;margin-bottom:12px}
+.scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.pt{position:relative;cursor:pointer}
+.pt-b{display:flex;align-items:center;justify-content:center;height:46px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);font-weight:700;font-size:15px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.pt:hover .pt-b{border-color:var(--ink-3)}
+.pt input:checked + .pt-b{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.scale-ends{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-3)}
+.q-nav{display:flex;justify-content:space-between;gap:12px;padding-top:8px}
+
+/* resultado */
+.plate{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:center}
+.seal{width:92px;height:92px;background:var(--seal);color:var(--seal-ink);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:58px;line-height:1;border-radius:5px;transform:rotate(-3deg)}
+.plate-sub{font-size:15px;color:var(--ink-2);margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;font-weight:500;padding:4px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-2);background:var(--paper-2)}
+.sec{display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--rule);padding-top:26px}
+.two{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:20px;align-items:center}
+@media (max-width:520px){.two{grid-template-columns:1fr}.plate{gap:16px}.seal{width:76px;height:76px;font-size:48px}}
+.glass{width:100%;max-width:200px;height:auto;display:block;margin-inline:auto}
+.gl-glass{fill:none;stroke:var(--ink-2);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.gl-table{stroke:var(--rule);stroke-width:1.5}
+.gl-water{fill:var(--water)}
+.gl-leaf{fill:var(--leaf)}
+.gl-rib{stroke:var(--paper-2);stroke-width:1;fill:none}
+.gl-speck{fill:var(--ink-2);opacity:0}
+.gl-drop{fill:var(--water);opacity:0}
+.gl-spark{fill:var(--gold-fill);opacity:0}
+.gl-leafwrap,.gl-leafmove,.gl-leafspin,.gl-speck,.gl-spark,.gl-drop{transform-box:fill-box;transform-origin:center}
+@keyframes gl-rise{to{transform:translateY(-44px)}}
+@keyframes gl-drip{0%{opacity:0;transform:translateY(0)}12%{opacity:1}100%{opacity:0;transform:translateY(130px)}}
+@keyframes gl-tint{to{fill:var(--water-alt)}}
+@keyframes gl-speck{from{opacity:0;transform:translateY(-12px)}to{opacity:.9;transform:none}}
+@keyframes gl-slide{from{transform:translateX(-26px) rotate(-8deg)}to{transform:translateX(26px) rotate(8deg)}}
+@keyframes gl-spin{to{transform:rotate(360deg)}}
+@keyframes gl-twinkle{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:1;transform:scale(1)}}
+.fx-pot .gl-water,.fx-pot .gl-leafwrap{animation:gl-rise 2.2s .4s cubic-bezier(.3,.7,.2,1) forwards}
+.fx-pot .gl-drop{animation:gl-drip 1.9s 2.5s ease-in infinite}
+.fx-pot .gl-drop.d2{animation-delay:3.3s}
+.fx-emi .gl-water,.fx-esp .gl-water{animation:gl-tint 2.4s .4s ease forwards}
+.fx-mat .gl-speck{animation:gl-speck 1.4s ease forwards;animation-delay:calc(var(--i) * .22s + .4s)}
+.fx-man .gl-leafmove{animation:gl-slide 2.6s ease-in-out infinite alternate}
+.fx-esp .gl-leafspin{animation:gl-spin 5s linear infinite}
+.fx-tra .gl-spark{animation:gl-twinkle 2.2s ease-in-out infinite;animation-delay:calc(var(--i) * .5s)}
+@media (prefers-reduced-motion: reduce){
+  .glass *{animation-duration:.01s!important;animation-delay:0s!important;animation-iteration-count:1!important;animation-direction:normal!important;animation-fill-mode:forwards!important}
+  .fx-pot .gl-drop{animation:none!important;opacity:1;transform:translateY(46px)}
+  .fx-tra .gl-spark{animation:none!important;opacity:1}
+  .fx-esp .gl-leafspin{animation:none!important;transform:rotate(35deg)}
+}
+
+.read{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 18px;margin:0}
+.read dt{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;padding-top:4px}
+.read dd{margin:0}
+.read dd b{font-family:var(--font-display);font-size:21px;font-weight:700}
+
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar{display:grid;grid-template-columns:minmax(0,11.5em) minmax(0,1fr) auto;gap:6px 14px;align-items:center}
+.bar-name{font-weight:500;display:flex;gap:8px;align-items:baseline;min-width:0}
+.bars.wide .bar{grid-template-columns:minmax(0,15.5em) minmax(0,1fr) auto}
+.bar-name .note{white-space:nowrap}
+.bar-name .k{font-family:var(--font-display);font-weight:700;color:var(--ink-3)}
+.bar.is-top .bar-name .k{color:var(--gold)}
+.bar-track{height:10px;border-left:1px solid var(--ink-3);display:block}
+.bar-fill{display:block;height:100%;background:var(--ink-3);border-radius:0 4px 4px 0;min-width:2px}
+.bar.is-top .bar-fill{background:var(--gold-fill)}
+.bar-val{font-size:15px;color:var(--ink-2);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.bar.is-top .bar-name,.bar.is-top .bar-val{font-weight:700;color:var(--ink)}
+@media (max-width:520px){
+  .bar,.bars.wide .bar{grid-template-columns:minmax(0,1fr) auto}
+  .bar-name{grid-column:1;grid-row:1}.bar-val{grid-column:2;grid-row:1}.bar-track{grid-column:1 / -1;grid-row:2}
+}
+.gate{font-size:15px;color:var(--ink-2);border:1px dashed var(--rule);border-radius:3px;padding:12px 14px}
+.who{font-size:15px;color:var(--ink-2)}
+details{border-top:1px solid var(--rule);padding-top:18px}
+summary{cursor:pointer;font-weight:700}
+details ol{margin:14px 0 0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px;font-size:15px;color:var(--ink-2)}
+.copybox{width:100%;min-height:120px;font:400 14px/1.5 var(--font-body);color:var(--ink);background:var(--paper-2);border:1px solid var(--rule);border-radius:3px;padding:10px}
+.toast{font-size:14px;color:var(--ink-2)}
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <p class="mast-k" lang="ja" aria-hidden="true">水見式</p>
+    <p class="mast-n">Test de Nen</p>
+  </header>
+  <main id="app"></main>
+  <noscript><p>Este test necesita JavaScript para calcular el resultado.</p></noscript>
+</div>
+
+<script>
+(function(){
+"use strict";
+/*CORE-START*/
+var ORDER=["pot","tra","mat","esp","man","emi"];
+var REG=["pot","tra","mat","man","emi"];
+var PRIN=["ten","zetsu","ren","hatsu"];
+
+var B1=[
+ {id:"i1",q:"Te cambian las reglas de un proyecto a última hora. ¿Qué haces primero?",o:[
+  ["pot","Pregunto qué hay que hacer ahora y me pongo a hacerlo."],
+  ["emi","Protesto en el momento y en voz alta. Al rato ya estoy en otra cosa."],
+  ["tra","Me hace gracia. Busco la ventaja que el cambio me da y que nadie ha visto."],
+  ["mat","Leo las reglas nuevas enteras y busco dónde pueden fallar antes de moverme."],
+  ["man","Pido la razón del cambio. Si no me convence, sigo con mi plan."]]},
+ {id:"i2",q:"Descubres que alguien te ha mentido a la cara.",o:[
+  ["pot","Se lo digo de frente, con enfado y sin rodeos."],
+  ["emi","Estallo ahí mismo. Después se me pasa y probablemente lo perdone."],
+  ["tra","No digo nada. Le sigo el juego y me guardo la carta."],
+  ["mat","Reviso qué más pudo falsear. Desde entonces compruebo todo lo que me dice."],
+  ["man","Le expongo la contradicción punto por punto hasta que no pueda sostenerla."],
+  ["esp","Me aparto sin escena. No vuelve a saber nada importante de mí."]]},
+ {id:"i3",q:"¿Qué objeto te representa mejor?",o:[
+  ["pot","Ninguno. Me basto con mis manos."],
+  ["man","Una herramienta que uso desde hace años y que nadie más toca."],
+  ["mat","Algo hecho por mí, exacto, con cada detalle pensado."],
+  ["tra","Algo que parece una cosa y resulta ser otra."],
+  ["emi","Algo que llega lejos: una pelota, un altavoz, una carta."]]},
+ {id:"i4",q:"¿Cómo aprendes mejor algo nuevo?",o:[
+  ["pot","Repitiendo. Lo hago mil veces hasta que sale."],
+  ["tra","Jugando con variantes. Si siempre es igual, lo dejo."],
+  ["emi","Me lanzo delante de otros y corrijo sobre la marcha."],
+  ["mat","Estudio el objeto a fondo: lo observo, lo dibujo y entiendo su estructura antes de probar."],
+  ["man","Diseño mi método y mi calendario, y nadie me los mueve."]]},
+ {id:"i5",q:"Un amigo te llama porque está en un lío serio.",o:[
+  ["pot","Voy. Las preguntas, después."],
+  ["emi","Me indigno por él y muevo a quien haga falta, a gritos si es necesario."],
+  ["tra","Lo ayudo a mi manera, y puede que nunca sepa cuánto hice."],
+  ["mat","Primero averiguo con calma qué pasó de verdad."],
+  ["man","Tomo el mando y reparto quién hace qué. A los míos no se les toca."]]},
+ {id:"i6",q:"En una discusión de grupo, sueles ser quien…",o:[
+  ["pot","dice lo que piensa sin filtro."],
+  ["emi","sube el tono primero y también hace las paces primero."],
+  ["tra","suelta la frase que descoloca a todos, medio en broma."],
+  ["mat","calla, observa y al final señala el fallo que nadie vio."],
+  ["man","argumenta hasta el final. Rara vez me convencen."],
+  ["esp","habla poco y aun así acaba marcando el rumbo."]]},
+ {id:"i7",q:"¿Qué te cuesta más?",o:[
+  ["pot","Disimular lo que siento."],
+  ["emi","Esperar, y cuidar los detalles finos."],
+  ["tra","Mantener el interés en lo mismo mucho tiempo."],
+  ["mat","Relajarme y bajar la guardia."],
+  ["man","Ceder, o ir al ritmo de otra persona."]]},
+ {id:"i8",q:"Si tu energía pudiera hacer una sola cosa, ¿cuál elegirías por instinto?",o:[
+  ["pot","Darme más fuerza, más resistencia y una curación más rápida."],
+  ["emi","Alcanzar lo que está lejos: golpear, hablar o aparecer a distancia."],
+  ["tra","Tomar otra cualidad: volverse elástica, eléctrica o pegajosa."],
+  ["mat","Crear de la nada un objeto con reglas propias."],
+  ["man","Hacer que personas u objetos obedezcan mis órdenes."],
+  ["esp","Algo que no está en esta lista: ver lo que otros no ven, o usar lo que es de otros."]]},
+ {id:"i9",q:"Para conseguir lo que más quieres, ¿qué precio aceptarías?",o:[
+  ["pot","Ninguna regla especial. Entrenar más que nadie."],
+  ["mat","Una regla muy estricta, con un castigo serio si la rompo."],
+  ["man","Una preparación larga y difícil. Después, todo bajo control."],
+  ["emi","Apostarlo todo a un solo tiro."],
+  ["tra","Una condición que solo yo conozca y que confunda al resto."]]},
+ {id:"i10",q:"¿Cómo te describe la gente que te conoce poco?",o:[
+  ["pot","Transparente: lo que se ve es lo que hay."],
+  ["tra","Imprevisible. No saben si hablo en serio."],
+  ["mat","Una persona seria, tensa y algo distante al principio."],
+  ["man","Una persona terca, lógica, metida en su mundo."],
+  ["emi","Una persona intensa e impulsiva, de buen corazón."],
+  ["esp","Alguien difícil de leer que atrae sin proponérselo."]]},
+ {id:"i11",q:"Un plan fracasa por un error tuyo.",o:[
+  ["pot","Lo admito sin vueltas y lo intento otra vez con más ganas."],
+  ["emi","Maldigo un rato. A los diez minutos estoy en otra cosa."],
+  ["tra","Lo convierto en otra cosa y actúo como si ese fuera el plan."],
+  ["mat","Reconstruyo paso a paso dónde falló. Me persigue durante días."],
+  ["man","Reviso el sistema. El fallo fue de método y lo rediseño."]]},
+ {id:"i12",q:"¿Cuál es tu relación con la mentira?",o:[
+  ["pot","Casi nunca miento, ni cuando me conviene."],
+  ["tra","Miento con facilidad si la situación lo pide. Casi es un juego."],
+  ["mat","No miento, pero tampoco cuento. Mido lo que digo."],
+  ["man","Elijo qué verdad decir y la uso como argumento."],
+  ["emi","La verdad se me escapa antes de pensarlo."]]}
+];
+
+var B2=[
+ {id:"c1",k:"pot",t:"Cuando quiero algo voy en línea recta, aunque moleste a alguien."},
+ {id:"c2",k:"mat",t:"Voy en guardia: suelo anticipar lo que puede salir mal."},
+ {id:"c3",k:"tra",t:"Me aburro de cosas que hace poco me apasionaban."},
+ {id:"c4",k:"man",t:"Si creo tener razón, discuto hasta el final."},
+ {id:"c5",k:"emi",t:"Me enfado rápido y se me pasa igual de rápido."},
+ {id:"c6",k:"esp",t:"La gente se me acerca y me sigue sin que yo lo busque."},
+ {id:"c7",k:"mat",t:"Me dicen que me tomo todo demasiado en serio."},
+ {id:"c8",k:"pot",t:"Se me nota en la cara lo que siento."},
+ {id:"c9",k:"emi",t:"Los detalles finos me impacientan: prefiero avanzar y corregir después."},
+ {id:"c10",k:"tra",t:"Muestro una cara distinta según con quién estoy, y me sale natural."},
+ {id:"c11",k:"esp",t:"Casi nadie sabe de verdad lo que pienso."},
+ {id:"c12",k:"man",t:"Avanzo a mi ritmo y las prisas ajenas no me mueven."},
+ {id:"c13",k:"emi",t:"Reacciono antes de pensar, sobre todo ante una injusticia."},
+ {id:"c14",k:"pot",t:"Prefiero una solución simple y contundente a una ingeniosa."},
+ {id:"c15",k:"mat",t:"Noto detalles e incoherencias que los demás pasan por alto."},
+ {id:"c16",k:"esp",t:"Aprendo cosas muy distintas entre sí con la misma facilidad."},
+ {id:"c17",k:"tra",t:"Disfruto de que no sepan qué voy a hacer."},
+ {id:"c18",k:"man",t:"Protejo a mi círculo cercano por encima de casi cualquier norma."},
+ {id:"c19",k:"esp",t:"Tomo decisiones importantes sin consultar y no siento que deba explicarlas."}
+];
+
+var B3=[
+ {id:"p1",q:"¿A qué has dedicado más horas de esfuerzo deliberado?",o:[
+  ["pot","A fortalecer lo básico: cuerpo, resistencia, fundamentos de mi oficio."],
+  ["tra","A cambiar de registro: probar estilos, técnicas o papeles distintos al mío."],
+  ["emi","A sacar cosas hacia fuera: publicar, presentar, vender, enseñar."],
+  ["mat","A construir algo concreto y terminado: un producto, una obra, un sistema."],
+  ["man","A organizar y dirigir: personas, procesos, automatizaciones."]]},
+ {id:"p2",q:"¿Qué te pide más tu entorno actual, sea trabajo, estudio o familia?",o:[
+  ["pot","Aguante: hacer lo mismo, bien, muchas veces."],
+  ["tra","Adaptación: cada semana es distinta y tengo que cambiar de forma."],
+  ["emi","Alcance: que mi trabajo o mi voz llegue a gente que no veo."],
+  ["mat","Precisión: entregar piezas exactas que funcionen solas."],
+  ["man","Coordinación: que otras personas o herramientas hagan su parte."]]},
+ {id:"p3",q:"Lo último que aprendiste a propósito fue…",o:[
+  ["pot","una mejora de rendimiento en algo que ya hacía: más fuerza, velocidad o fondo."],
+  ["tra","algo ajeno a lo mío, por curiosidad o por juego."],
+  ["emi","a comunicar mejor: hablar, escribir, mostrar."],
+  ["mat","a fabricar o diseñar algo con mis manos o mis herramientas."],
+  ["man","a manejar un sistema: gestión, programación, estrategia, negociación."]]},
+ {id:"p4",q:"Cuando tienes una hora libre de verdad, últimamente la usas en…",o:[
+  ["pot","entrenar o repetir una práctica."],
+  ["tra","lo que me apetezca ese día; cambio a menudo."],
+  ["emi","hablar con gente, compartir, enviar cosas."],
+  ["mat","avanzar un proyecto propio, pieza a pieza."],
+  ["man","planificar, ordenar, optimizar."]]},
+ {id:"p5",q:"¿Dónde notas más progreso este trimestre?",o:[
+  ["pot","Rindo más: aguanto más y hago más con lo mismo."],
+  ["tra","Tengo más recursos: resuelvo de formas que antes no se me ocurrían."],
+  ["emi","Llego más lejos: más gente recibe lo que hago."],
+  ["mat","Tengo más cosas hechas y tangibles."],
+  ["man","Tengo más control: las cosas funcionan sin que yo empuje cada una."]]},
+ {id:"p6",q:"¿Cómo resolviste tu último reto serio?",o:[
+  ["pot","A fuerza de insistir."],
+  ["tra","Con un truco o un cambio de enfoque."],
+  ["emi","Pidiendo ayuda lejos, o haciendo ruido hasta que algo se movió."],
+  ["mat","Construyendo la herramienta o el documento que faltaba."],
+  ["man","Reorganizando quién hacía qué."]]},
+ {id:"p7",q:"Tu rutina diaria actual tiene, sobre todo…",o:[
+  ["pot","ejercicio o práctica repetida."],
+  ["tra","variedad: casi ningún día se parece al anterior."],
+  ["emi","mensajes, llamadas y publicaciones: mucho contacto hacia fuera."],
+  ["mat","tiempo de taller: horas de concentración haciendo."],
+  ["man","listas, calendarios y tableros: todo pasa por mi sistema."]]},
+ {id:"p8",q:"Si mañana te evaluaran, ¿en qué estás hoy más en forma?",o:[
+  ["pot","Potencia y resistencia."],
+  ["tra","Improvisación y cambio de ritmo."],
+  ["emi","Proyección: transmitir y convencer a distancia."],
+  ["mat","Oficio: fabricar con detalle."],
+  ["man","Mando: dirigir y hacer que las piezas encajen."]]}
+];
+
+var B4=[
+ {id:"t1",k:"ten",t:"Mantuve la atención en una sola tarea 30 minutos seguidos."},
+ {id:"z1",k:"zetsu",t:"Cuando descansé, desconecté del todo: sin pantallas y sin trabajo en la cabeza."},
+ {id:"r1",k:"ren",t:"Practiqué algo con esfuerzo deliberado al menos cinco días por semana."},
+ {id:"h1",k:"hatsu",t:"Lo que planeé, lo ejecuté y lo entregué."},
+ {id:"t2",k:"ten",t:"Tuve presente cada día cuál es mi meta principal."},
+ {id:"z2",k:"zetsu",t:"Supe guardar silencio y observar antes de intervenir."},
+ {id:"r2",k:"ren",t:"Cuando hizo falta, subí la intensidad y la sostuve hasta terminar."},
+ {id:"h2",k:"hatsu",t:"Hice algo con sello propio: alguien podría reconocer que es mío."},
+ {id:"t3",k:"ten",r:true,t:"Terminé el día sin energía y sin saber en qué se me fue."},
+ {id:"z3",k:"zetsu",t:"Pude decir en una frase clara qué quería conseguir."},
+ {id:"r3",k:"ren",r:true,t:"Dejé a medias lo que exigía un esfuerzo incómodo."},
+ {id:"h3",k:"hatsu",r:true,t:"Me quedé preparando o pensando sin llegar a actuar."}
+];
+
+function clamp(x,a,b){return Math.max(a,Math.min(b,x));}
+function hexDist(a,b){var d=Math.abs(ORDER.indexOf(a)-ORDER.indexOf(b));return Math.min(d,6-d);}
+function eff(t,c){return [1,0.8,0.6,0.4][hexDist(t,c)];}
+function zero(keys){var o={};keys.forEach(function(k){o[k]=0;});return o;}
+
+function scoreNen(a){
+  a=a||{};
+  var answered=0,total=B1.length+B2.length+B3.length+B4.length;
+  var picks=zero(REG),lik=zero(REG),specPicks=0,specLik=0;
+  B1.forEach(function(it){var v=a[it.id];if(v==null)return;answered++;if(v==="esp")specPicks++;else if(picks[v]!=null)picks[v]++;});
+  B2.forEach(function(it){var v=a[it.id];if(v==null)return;answered++;var d=v-2;if(it.k==="esp")specLik+=d;else lik[it.k]+=d;});
+  var innate={};REG.forEach(function(c){innate[c]=3*picks[c]+1.5*lik[c];});
+  var ix=function(c){return REG.indexOf(c);};
+  var rank=REG.slice().sort(function(x,y){return (innate[y]-innate[x])||(picks[y]-picks[x])||(lik[y]-lik[x])||(ix(x)-ix(y));});
+  var base=rank[0],second=rank[1],margin=innate[base]-innate[second];
+  var clarity=margin>=12?"alta":margin>=6?"media":"baja";
+  var iTop=REG.slice().sort(function(x,y){return (picks[y]-picks[x])||(lik[y]-lik[x])||(ix(x)-ix(y));})[0];
+  var cTop=REG.slice().sort(function(x,y){return (lik[y]-lik[x])||(picks[y]-picks[x])||(ix(x)-ix(y));})[0];
+  var coherence=iTop===cTop?"coinciden":(hexDist(iTop,cTop)===1?"vecinas":"discrepan");
+  var isSpec=specLik>=5&&specPicks>=2;
+  var specNorm=0.5*(specLik+8)/16+0.5*specPicks/4;
+  var type=isSpec?"esp":base;
+
+  var pos=0;REG.forEach(function(c){pos+=Math.max(0,innate[c]);});
+  var innShare={};REG.forEach(function(c){innShare[c]=pos>0?Math.max(0,innate[c])/pos:0.2;});
+  var p3=zero(REG),n3=0;
+  B3.forEach(function(it){var v=a[it.id];if(v==null)return;answered++;n3++;if(p3[v]!=null)p3[v]++;});
+  var P={};REG.forEach(function(c){P[c]=n3?p3[c]/n3:0.2;});
+  var C={};REG.forEach(function(c){C[c]=0.4*innShare[c]+0.6*P[c];});
+
+  var i=ORDER.indexOf(type),cw=ORDER[(i+1)%6],ccw=ORDER[(i+5)%6],own,vcw,vccw;
+  if(type==="esp"){own=Math.max(C.man,C.mat);vcw=C.man;vccw=C.mat;own=own*0.5;}
+  else{
+    own=C[type];
+    var specLean=clamp((specNorm-0.25)/0.75,0,1)*own;
+    vcw=cw==="esp"?specLean:C[cw];vccw=ccw==="esp"?specLean:C[ccw];
+  }
+  var leanRaw=clamp(1.5*(vcw-vccw)/Math.max(own+vcw+vccw,0.05),-1,1);
+  var angle=((i*60+30*leanRaw)%360+360)%360;
+  var leanDeg=Math.abs(30*leanRaw),leanTo=leanRaw>=0?cw:ccw;
+
+  var acc={ten:[],zetsu:[],ren:[],hatsu:[]};
+  B4.forEach(function(it){var v=a[it.id];if(v==null)return;answered++;acc[it.k].push(it.r?4-v:v);});
+  var prin={},dom=0;
+  PRIN.forEach(function(k){var arr=acc[k],s=0;arr.forEach(function(v){s+=v;});prin[k]=arr.length?s/arr.length/4:0.5;dom+=prin[k]/4;});
+  var weakest=PRIN.slice().sort(function(x,y){return (prin[x]-prin[y])||(PRIN.indexOf(x)-PRIN.indexOf(y));})[0];
+
+  var effNow=0;REG.forEach(function(c){effNow+=P[c]*eff(type,c);});
+  var topP=REG.slice().sort(function(x,y){return (P[y]-P[x])||(eff(type,y)-eff(type,x))||(ix(x)-ix(y));})[0];
+  var mismatch=n3>0&&P[topP]>=0.375&&eff(type,topP)<=0.6;
+
+  return {answered:answered,total:total,done:answered>=total,type:type,base:base,second:second,rank:rank,
+    innate:innate,picks:picks,lik:lik,innShare:innShare,margin:margin,clarity:clarity,coherence:coherence,iTop:iTop,cTop:cTop,
+    isSpec:isSpec,specPicks:specPicks,specLik:specLik,specNorm:specNorm,P:P,n3:n3,
+    angle:angle,leanRaw:leanRaw,leanDeg:leanDeg,leanTo:leanTo,dominio:dom,prin:prin,weakest:weakest,
+    effNow:effNow,topP:topP,mismatch:mismatch};
+}
+/*CORE-END*/
+
+var DOC_URL="https://claude.ai/code/artifact/f8404d21-5b4e-4a03-a067-48188ced2142";
+
+var CAT={
+ pot:{n:"Intensificación",k:"強化",s:"強",en:"Enhancement",
+  nat:"Vas de frente. Lo que sientes se te nota, lo que quieres lo persigues en línea recta y rara vez mientes. Hisoka describe este tipo como simple y decidido.",
+  agua:"El agua aumenta y rebosa el vaso.",
+  hatsu:"Tu Hatsu natural es sencillo: hacer más fuerte lo que ya tienes. En la obra este tipo llega lejos con habilidades simples, porque es el más equilibrado entre ataque y defensa. Pide volumen de práctica más que ingenio.",
+  voto:"Un tiempo de carga a cambio de potencia, como el canto de Gon antes del golpe.",
+  sombra:"La franqueza te vuelve previsible, y la terquedad te hace chocar dos veces con el mismo muro.",
+  who:"Gon, Netero, Uvogin, Phinks, Nobunaga, Wing"},
+ tra:{n:"Transmutación",k:"変化",s:"変",en:"Transmutation",
+  nat:"Cambias de forma según el momento. Te aburre lo que ayer te fascinaba, enseñas una cara y guardas otra, y disfrutas de que no te vean venir. Hisoka, que es de este tipo, lo llama caprichoso y embaucador.",
+  agua:"El agua cambia de sabor. A la vista no pasa nada; a Killua le salió dulce.",
+  hatsu:"Tu Hatsu natural da a tu energía una cualidad prestada: elástica, eléctrica, cortante. Killua pasó años recibiendo descargas antes de poder imitar la electricidad. La cualidad que elijas tiene que haberte atravesado.",
+  voto:"Una cualidad que conozcas en el cuerpo y no solo en teoría.",
+  sombra:"Dejas cosas a medias cuando pierden novedad, y la fachada cansa a quien quiere conocerte.",
+  who:"Killua, Hisoka, Machi, Biscuit, Feitan, Zeno"},
+ mat:{n:"Materialización",k:"具現化",s:"具",en:"Conjuration",
+  nat:"Observas antes de moverte. Te tomas las cosas en serio, vas en guardia, analizas con calma y casi nunca caes en una trampa. Hisoka describe este tipo como nervioso y lógico.",
+  agua:"Aparecen impurezas en el agua.",
+  hatsu:"Tu Hatsu natural crea un objeto real con reglas propias. Exige conocer ese objeto con los cinco sentidos, como Kurapika con sus cadenas, y es de los tipos que más poder saca de una condición estricta.",
+  voto:"Una regla estrecha y un castigo real si la rompes.",
+  sombra:"La tensión constante te desgasta y el exceso de cálculo te hace llegar tarde.",
+  who:"Kurapika, Shizuku, Kortopi, Knov, Kite, Genthru"},
+ esp:{n:"Especialización",k:"特質",s:"特",en:"Specialization",
+  nat:"No encajas en las otras cinco casillas. Decides sin consultar, cuentas poco de ti y aun así la gente te sigue. Hisoka describe este tipo como independiente y carismático.",
+  agua:"Ocurre otra cosa. En el manga, a Pitou se le secó la hoja, a Tserriednich le hirvió el agua, y a Kurapika le cambió el color mientras la hoja giraba.",
+  hatsu:"Tu Hatsu no pertenece a ninguna categoría o las combina todas: leer el pasado, escribir el futuro, tomar prestado lo de otros. No se puede usar a medias: se tiene o no se tiene.",
+  voto:"Varias condiciones encadenadas. Quien roba habilidades en la obra debe cumplir cuatro o cinco antes de usarlas.",
+  sombra:"La distancia que te protege también te aísla, y quien no se define tarda en encontrar su habilidad.",
+  who:"Chrollo, Neon, Pakunoda, Neferpitou, Meruem, Kurapika con los ojos escarlata"},
+ man:{n:"Manipulación",k:"操作",s:"操",en:"Manipulation",
+  nat:"Vas a tu ritmo y con tu lógica. Discutes hasta el final, no cedes en tus metas y proteges a los tuyos por encima de casi todo.",
+  agua:"La hoja se mueve sobre el agua.",
+  hatsu:"Tu Hatsu natural hace que algo o alguien siga tus órdenes. En la obra depende de un instrumento que el usuario lleva años usando y de un requisito previo difícil de cumplir. Una vez cumplido, la pelea suele estar decidida.",
+  voto:"Un requisito de activación exigente, a cambio de control total después.",
+  sombra:"Confundes dirigir con cuidar, y lo que no puedes controlar te descoloca.",
+  who:"Illumi, Shalnark, Morel, Kalluto, Shoot"},
+ emi:{n:"Emisión",k:"放出",s:"放",en:"Emission",
+  nat:"Reaccionas rápido y hacia fuera. Te enciendes antes de pensar, los detalles te impacientan y, a diferencia del intensificador, se te pasa pronto y no guardas rencor.",
+  agua:"El agua cambia de color.",
+  hatsu:"Tu Hatsu natural actúa a distancia: lanzar, enviar, alcanzar lo que está lejos, incluso desplazarte. El aura pierde fuerza al separarse del cuerpo, así que tu oficio es que lo enviado llegue entero.",
+  voto:"Un gesto de entrega. Franklin se cortó las puntas de los dedos porque sintió que así sus balas serían más fuertes.",
+  sombra:"Disparas antes de apuntar y dejas el detalle para otra persona.",
+  who:"Leorio, Razor, Franklin, Knuckle, Pokkle"}
+};
+var PR={
+ ten:{n:"Ten",k:"纏",d:"retener la energía",fix:"Tu energía se escapa. Ejercicio de la versión de la llama (点): cinco minutos de quietud cada mañana para enfocar la mente y fijar la meta del día."},
+ zetsu:{n:"Zetsu",k:"絶",d:"cortar y descansar",fix:"Te cuesta cerrar la llave. Ejercicio: un descanso real al día, sin pantallas, y escribir en una frase qué quieres (舌, ponerlo en palabras)."},
+ ren:{n:"Ren",k:"練",d:"subir la intensidad",fix:"Falta volumen sostenido. En la obra, alargar el Ren diez minutos cuesta un mes de práctica diaria. Elige una sola práctica y hazla cada día."},
+ hatsu:{n:"Hatsu",k:"発",d:"llevar a la acción",fix:"Te quedas en la preparación. Ejercicio: termina y entrega una cosa pequeña cada semana."}
+};
+var BLOCKS=[
+ {r:"I",n:"Instinto",d:"12 situaciones",hint:"Elige lo que más se parece a ti desde siempre, no lo que te gustaría."},
+ {r:"II",n:"Carácter",d:"19 frases",hint:"¿Cuánto te describe cada frase? Piensa en cómo eres en general.",scale:["Nada","Poco","A medias","Bastante","Del todo"]},
+ {r:"III",n:"Práctica actual",d:"8 preguntas sobre los últimos tres meses",hint:"Responde solo por los últimos tres meses."},
+ {r:"IV",n:"Cuatro principios",d:"12 frases sobre las últimas cuatro semanas",hint:"¿Con qué frecuencia te pasó en las últimas cuatro semanas?",scale:["Casi nunca","Pocas veces","A veces","A menudo","Casi siempre"]}
+];
+var BLOCK_ITEMS=[B1,B2,B3,B4];
+
+function chunk(arr,n){var out=[];for(var i=0;i<arr.length;i+=n)out.push(arr.slice(i,i+n));return out;}
+var STEPS=[];
+B1.forEach(function(it){STEPS.push({t:"fc",b:0,items:[it]});});
+chunk(B2,5).forEach(function(g){STEPS.push({t:"lk",b:1,items:g});});
+B3.forEach(function(it){STEPS.push({t:"fc",b:2,items:[it]});});
+chunk(B4,4).forEach(function(g){STEPS.push({t:"lk",b:3,items:g});});
+var QNUM={},TOTAL=0;
+BLOCK_ITEMS.forEach(function(b){b.forEach(function(it){QNUM[it.id]=++TOTAL;});});
+
+var KEY="nen-test-v1";
+var app=document.getElementById("app");
+var state={a:{},step:0,seed:Math.floor(Math.random()*1e9),view:"intro"};
+
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+function load(){try{var s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&s.a&&typeof s.a==="object"){state.a=s.a;state.step=s.step||0;state.seed=s.seed||state.seed;}}catch(e){}}
+function rng(seed){var t=seed>>>0;return function(){t+=0x6D2B79F5;var r=Math.imul(t^(t>>>15),1|t);r^=r+Math.imul(r^(r>>>7),61|r);return ((r^(r>>>14))>>>0)/4294967296;};}
+function shuffled(arr,seed){var a=arr.slice(),r=rng(seed);for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;}return a;}
+function pct(x){return Math.round(x*100)+" %";}
+function countAnswered(){var n=0;for(var k in QNUM)if(state.a[k]!=null)n++;return n;}
+function firstOpenStep(){for(var i=0;i<STEPS.length;i++){if(STEPS[i].items.some(function(it){return state.a[it.id]==null;}))return i;}return STEPS.length;}
+
+/* ---------- hexagrama ---------- */
+function hexSVG(o){
+  var W=376,H=288,cx=177,cy=150,R=88;
+  function pt(deg,f){var r=deg*Math.PI/180,m=(((deg%60)+60)%60-30)*Math.PI/180,rb=R*Math.cos(Math.PI/6)/Math.cos(m);return [cx+f*rb*Math.sin(r),cy-f*rb*Math.cos(r)];}
+  function poly(f){return ORDER.map(function(_,i){var p=pt(i*60,f);return p[0].toFixed(1)+","+p[1].toFixed(1);}).join(" ");}
+  var s='<svg class="hex" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+o.label+'">';
+  s+='<polygon class="hx-outer" points="'+poly(1)+'"/>';
+  [0.25,0.5,0.75].forEach(function(f){s+='<polygon class="hx-ring" points="'+poly(f)+'"/>';});
+  ORDER.forEach(function(_,i){var p=pt(i*60,1);s+='<line class="hx-spoke" x1="'+cx+'" y1="'+cy+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'"/>';});
+  var ti=ORDER.indexOf(o.type),v=pt(ti*60,1),b=pt(o.angle,1),d=pt(o.angle,Math.max(0.1,o.frac));
+  if(Math.abs(b[0]-v[0])+Math.abs(b[1]-v[1])>1)s+='<line class="hx-lean" x1="'+v[0].toFixed(1)+'" y1="'+v[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'"/>';
+  s+='<line class="hx-aura" x1="'+cx+'" y1="'+cy+'" x2="'+d[0].toFixed(1)+'" y2="'+d[1].toFixed(1)+'"/>';
+  ORDER.forEach(function(c,i){
+    var p=pt(i*60,1),on=c===o.type?" is-type":"",e=o.showEff?(c==="esp"&&o.type!=="esp"?"0\u00a0%":pct(eff(o.type,c))):"";
+    s+='<circle class="hx-v'+on+'" cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="12"/>';
+    s+='<text class="hx-k'+on+'" x="'+p[0].toFixed(1)+'" y="'+p[1].toFixed(1)+'" lang="ja">'+CAT[c].s+'</text>';
+    if(i===0||i===3){
+      var y=i===0?p[1]-21:p[1]+29;
+      s+='<text class="hx-name" text-anchor="middle" x="'+p[0].toFixed(1)+'" y="'+y.toFixed(1)+'">'+CAT[c].n+(e?' <tspan class="hx-eff">· '+e+'</tspan>':'')+'</text>';
+    }else{
+      var right=i<3,x=right?p[0]+19:p[0]-19,an=right?"start":"end";
+      s+='<text class="hx-name" text-anchor="'+an+'" x="'+x.toFixed(1)+'" y="'+(p[1]+(e?-1:4)).toFixed(1)+'">'+CAT[c].n+'</text>';
+      if(e)s+='<text class="hx-eff" text-anchor="'+an+'" x="'+x.toFixed(1)+'" y="'+(p[1]+14).toFixed(1)+'">'+e+'</text>';
+    }
+  });
+  s+='<circle class="hx-dot" cx="'+d[0].toFixed(1)+'" cy="'+d[1].toFixed(1)+'" r="6.5"/>';
+  return s+'</svg>';
+}
+
+/* ---------- vaso ---------- */
+function glassSVG(type){
+  var s='<svg class="glass fx-'+type+'" viewBox="0 0 240 226" role="img" aria-label="Vaso de agua con una hoja flotando. '+CAT[type].agua+'">';
+  s+='<defs><clipPath id="gl-clip"><polygon points="61,32 74.5,207 165.5,207 179,32"/></clipPath></defs>';
+  s+='<line class="gl-table" x1="26" y1="211" x2="214" y2="211"/>';
+  s+='<g clip-path="url(#gl-clip)"><rect class="gl-water" x="50" y="78" width="140" height="200"/>';
+  [[95,122],[131,108],[151,142],[110,162],[141,178],[88,150],[124,136],[157,114]].forEach(function(p,i){
+    s+='<rect class="gl-speck" style="--i:'+i+'" x="'+(p[0]-2.5)+'" y="'+(p[1]-2.5)+'" width="5" height="5" transform="rotate(45 '+p[0]+' '+p[1]+')"/>';});
+  s+='</g>';
+  s+='<ellipse class="gl-drop" cx="56" cy="40" rx="3" ry="4.5"/><ellipse class="gl-drop d2" cx="184" cy="40" rx="3" ry="4.5"/>';
+  s+='<path class="gl-glass" d="M58,28 L72,206 Q72.3,210 76,210 L164,210 Q167.7,210 168,206 L182,28"/>';
+  s+='<g class="gl-leafwrap"><g class="gl-leafmove"><g class="gl-leafspin"><path class="gl-leaf" d="M97,78 Q120,63 143,78 Q120,93 97,78 Z"/><path class="gl-rib" d="M100,78 L140,78"/></g></g></g>';
+  [[96,54],[126,46],[150,58]].forEach(function(p,i){
+    s+='<path class="gl-spark" style="--i:'+i+'" d="M'+p[0]+','+(p[1]-6)+' L'+(p[0]+1.6)+','+(p[1]-1.6)+' L'+(p[0]+6)+','+p[1]+' L'+(p[0]+1.6)+','+(p[1]+1.6)+' L'+p[0]+','+(p[1]+6)+' L'+(p[0]-1.6)+','+(p[1]+1.6)+' L'+(p[0]-6)+','+p[1]+' L'+(p[0]-1.6)+','+(p[1]-1.6)+' Z"/>';});
+  return s+'</svg>';
+}
+
+/* ---------- vistas ---------- */
+function progressHTML(stepIdx){
+  var st=STEPS[stepIdx],bm=BLOCKS[st.b],done=countAnswered();
+  var segs=BLOCK_ITEMS.map(function(b){var n=0;b.forEach(function(it){if(state.a[it.id]!=null)n++;});return '<span class="seg" style="flex:'+b.length+'"><i style="width:'+(100*n/b.length)+'%"></i></span>';}).join("");
+  return '<div class="prog"><div class="prog-top"><span>Parte '+bm.r+' de IV · <b>'+bm.n+'</b></span><span class="prog-n">'+done+' / '+TOTAL+'</span></div><div class="segs" role="progressbar" aria-valuemin="0" aria-valuemax="'+TOTAL+'" aria-valuenow="'+done+'" aria-label="Preguntas respondidas">'+segs+'</div></div>';
+}
+
+function renderIntro(){
+  var done=countAnswered(),open=firstOpenStep();
+  var parts=BLOCKS.map(function(b){return '<li><span class="r">'+b.r+'</span><span class="n">'+b.n+'</span><span class="d">'+b.d+'</span></li>';}).join("");
+  var cta;
+  if(done>0&&open<STEPS.length){
+    cta='<button class="btn" data-act="resume">Continuar en la pregunta '+QNUM[STEPS[open].items.filter(function(it){return state.a[it.id]==null;})[0].id]+'</button><button class="btn ghost" data-act="restart">Empezar de cero</button>';
+  }else if(done>=TOTAL){
+    cta='<button class="btn" data-act="results">Ver mi resultado</button><button class="btn ghost" data-act="restart">Empezar de cero</button>';
+  }else cta='<button class="btn" data-act="start">Empezar</button>';
+  app.innerHTML=
+  '<div class="stack-l">'+
+   '<div class="stack"><h1 tabindex="-1">¿Cuál es tu tipo de Nen y dónde estás hoy en el hexagrama?</h1>'+
+   '<p class="lead">El test mide dos cosas por separado. Tu tipo es innato y no cambia. Tu posición sí: se mueve con lo que entrenas, con tu entorno y con tu mentalidad.</p></div>'+
+   '<figure>'+hexSVG({type:"tra",angle:30,frac:1,showEff:false,label:"Hexagrama del Nen con las seis categorías. Ejemplo: Killua, a medio camino entre Transmutación e Intensificación."})+
+   '<div class="key"><span><i class="k-type"></i>tipo innato</span><span><i class="k-lean"></i>inclinación</span><span><i class="k-pos"></i>posición</span></div>'+
+   '<figcaption>Ejemplo del manga: Killua es transmutador y está a medio camino de Intensificación. En tu resultado, la distancia al centro añade cuánto dominas los cuatro principios.</figcaption></figure>'+
+   '<div class="stack"><p class="eyebrow">51 preguntas · unos 9 minutos</p><ol class="parts">'+parts+'</ol>'+
+   '<p class="note">Las partes I y II buscan tu tipo con dos métodos distintos y comparan si coinciden. Las partes III y IV miden tu estado de ahora.</p></div>'+
+   '<div class="btn-row">'+cta+'</div>'+
+   '<p class="note">Dentro del manga, Hisoka admite que adivinar el tipo por la personalidad es tan fiable como el horóscopo o el grupo sanguíneo. Esto es un juego bien armado, no un diagnóstico. El trasfondo cultural está en el <a href="'+DOC_URL+'" target="_blank" rel="noopener">informe de investigación</a>.</p>'+
+  '</div>';
+}
+
+function renderStep(focus){
+  var st=STEPS[state.step],bm=BLOCKS[st.b],h=progressHTML(state.step)+'<section class="q"><p class="q-hint">'+bm.hint+'</p>';
+  if(st.t==="fc"){
+    var it=st.items[0],opts=shuffled(it.o,state.seed+QNUM[it.id]*7919);
+    h+='<fieldset><legend class="q-text" tabindex="-1"><span class="q-num">Pregunta '+QNUM[it.id]+'</span>'+it.q+'</legend>';
+    opts.forEach(function(o){
+      h+='<label class="opt"><input type="radio" name="'+it.id+'" id="'+it.id+'-'+o[0]+'" value="'+o[0]+'"'+(state.a[it.id]===o[0]?" checked":"")+'><span class="opt-mark"></span><span class="opt-t">'+o[1]+'</span></label>';});
+    h+='</fieldset>';
+  }else{
+    h+='<div>';
+    st.items.forEach(function(it,ix){
+      h+='<div class="lk-row"><fieldset class="lk"><legend class="lk-t"'+(ix===0?' tabindex="-1"':'')+'><span class="q-num">Frase '+QNUM[it.id]+'</span>'+it.t+'</legend><div class="scale">';
+      bm.scale.forEach(function(lab,v){
+        h+='<label class="pt"><input type="radio" name="'+it.id+'" id="'+it.id+'-'+v+'" value="'+v+'"'+(state.a[it.id]===v?" checked":"")+'><span class="pt-b" title="'+lab+'">'+(v+1)+'<span class="vh"> '+lab+'</span></span></label>';});
+      h+='</div><div class="scale-ends" aria-hidden="true"><span>1 · '+bm.scale[0]+'</span><span>5 · '+bm.scale[4]+'</span></div></fieldset></div>';
+    });
+    h+='</div>';
+  }
+  var last=state.step===STEPS.length-1;
+  h+='<nav class="q-nav"><button class="btn ghost" data-act="prev">'+(state.step===0?"Portada":"Anterior")+'</button><button class="btn" data-act="next"'+(stepDone()?"":" disabled")+'>'+(last?"Ver mi resultado":"Siguiente")+'</button></nav></section>';
+  app.innerHTML=h;
+  if(focus){var el=app.querySelector("legend[tabindex]");if(el){try{el.focus({preventScroll:true});}catch(e){}}window.scrollTo(0,0);}
+}
+function stepDone(){return STEPS[state.step].items.every(function(it){return state.a[it.id]!=null;});}
+
+function barsHTML(rows,wide){
+  return '<div class="bars'+(wide?" wide":"")+'">'+rows.map(function(r){
+    return '<div class="bar'+(r.top?" is-top":"")+'" title="'+r.title+'"><span class="bar-name"><span class="k" lang="ja" aria-hidden="true">'+r.k+'</span>'+r.name+'</span><span class="bar-track"><span class="bar-fill" style="width:'+Math.max(0,Math.min(100,r.w*100)).toFixed(1)+'%"></span></span><span class="bar-val">'+r.val+'</span></div>';
+  }).join("")+'</div>';
+}
+
+function leanText(r){
+  var T=CAT[r.type].n,N=CAT[r.leanTo].n,d=Math.round(r.leanDeg);
+  if(r.leanDeg<5)return {short:"sin inclinación apreciable",long:"Estás en el vértice de "+T+", sin inclinación apreciable hacia ninguna vecina."};
+  var kind=r.leanDeg<14?"una inclinación ligera":r.leanDeg<22?"una inclinación marcada":"doble afinidad";
+  var extra=r.leanDeg>=22?" Es el caso de Killua entre Transmutación e Intensificación: aprendes la vecina casi tan rápido como la propia, aunque su eficiencia siga en el 80 %.":" La inclinación acelera el aprendizaje de esa vecina; su eficiencia sigue en el 80 %.";
+  if(r.leanTo==="esp")extra=" En el manga, materializadores y manipuladores son quienes más opciones tienen de volverse especialistas con el tiempo.";
+  return {short:d+"° hacia "+N,long:"Estás en "+T+", "+d+"° hacia "+N+": "+kind+". El máximo son 30°, el punto medio de la arista."+extra};
+}
+function domWord(x){return x<0.35?"nodos recién abiertos":x<0.55?"base en construcción":x<0.75?"base sólida":"control fino";}
+
+function summaryText(r){
+  var c=CAT[r.type],lt=leanText(r);
+  return "Test de Nen\nTipo: "+c.n+" ("+c.k+")"+(r.isSpec?" · base "+CAT[r.base].n:"")+
+   "\nClaridad: "+r.clarity+" · instinto y carácter "+(r.coherence==="coinciden"?"coinciden":r.coherence==="vecinas"?"apuntan a categorías vecinas":"discrepan")+
+   "\nPosición: "+lt.short+
+   "\nDominio de los cuatro principios: "+Math.round(r.dominio*100)+" % ("+PRIN.map(function(k){return PR[k].n+" "+Math.round(r.prin[k]*100);}).join(", ")+")"+
+   "\nRendimiento de la práctica actual: "+Math.round(r.effNow*100)+" %"+
+   "\nAdivinación del agua: "+c.agua;
+}
+
+function renderResults(){
+  var r=scoreNen(state.a),c=CAT[r.type],lt=leanText(r);
+  var cohTxt=r.coherence==="coinciden"?"Instinto y carácter coinciden":r.coherence==="vecinas"?"Instinto y carácter apuntan a vecinas":"Instinto y carácter discrepan";
+  var sub=c.k+" · "+c.en;
+  var clar;
+  if(r.clarity==="alta")clar="Resultado claro: "+CAT[r.base].n+" saca "+fmt(r.margin)+" puntos a "+CAT[r.second].n+", la segunda.";
+  else if(r.clarity==="media")clar="Resultado probable: "+CAT[r.base].n+" saca "+fmt(r.margin)+" puntos a "+CAT[r.second].n+".";
+  else clar="Resultado ajustado: "+CAT[r.base].n+" y "+CAT[r.second].n+" casi empatan ("+fmt(r.margin)+" puntos). "+(hexDist(r.base,r.second)===1?"Son vecinas en el hexagrama, así que la lectura es coherente: estás en esa arista.":"No son vecinas en el hexagrama. Conviene repetir el test otro día.");
+  if(r.isSpec)clar="Has cruzado la puerta de Especialización. Tu categoría de base es "+CAT[r.base].n+(r.base==="mat"||r.base==="man"?", una de las dos desde las que el manga dice que es más fácil llegar.":". En el manga lo habitual es llegar desde Materialización o Manipulación, así que tu caso sería atípico.");
+
+  var aff=REG.map(function(k){return {k:CAT[k].s,name:CAT[k].n,w:r.innShare[k],val:pct(r.innShare[k]),top:k===r.base,title:CAT[k].n+": "+fmt(r.innate[k])+" puntos ("+r.picks[k]+" elecciones en la parte I, "+(r.lik[k]>0?"+":"")+r.lik[k]+" en las frases de la parte II)"};});
+  var prb=PRIN.map(function(k){return {k:PR[k].k,name:PR[k].n+" <span class=\"note\">· "+PR[k].d+"</span>",w:r.prin[k],val:pct(r.prin[k]),top:false,title:PR[k].n+": "+Math.round(r.prin[k]*100)+" %"};});
+  var prac=REG.map(function(k){return {k:CAT[k].s,name:CAT[k].n,w:r.P[k],val:pct(r.P[k])+" · rinde al "+pct(eff(r.type,k)),top:k===r.type,title:CAT[k].n+": "+Math.round(r.P[k]*8)+" de 8 respuestas; eficiencia "+Math.round(eff(r.type,k)*100)+" %"};});
+  var pracMsg="Lo que más trabajas es "+CAT[r.topP].n+", donde tu tipo rinde al "+pct(eff(r.type,r.topP))+".";
+  if(r.mismatch)pracMsg+=" Estás poniendo el grueso del esfuerzo lejos de tu categoría. En la obra, Hisoka llama a eso sobrecarga de memoria: fue el error de Kastro.";
+  else if(r.topP===r.type)pracMsg+=" Entrenas sobre todo lo tuyo, que es lo que más rinde.";
+  pracMsg+=" Biscuit recomienda entrenar todas las categorías accesibles, con menos tiempo cuanto más lejos queden de la propia.";
+  var gate="Indicador de Especialización: "+r.specPicks+" de 4 respuestas en la parte I y "+(r.specLik>0?"+":"")+r.specLik+" puntos de 8 en la parte II. La puerta se abre con 2 respuestas y +5 puntos a la vez. Es estrecha a propósito: en el manga, Morena estima un especialista por cada 3.000 usuarios.";
+  var espNote=r.type==="esp"?'<p class="note">El manga dice que el especialista aprende todas las categorías con facilidad, pero no confirma su eficiencia en ellas. Las cifras del diagrama salen de la geometría del hexagrama.</p>':"";
+
+  app.innerHTML=
+  '<div class="stack-l">'+
+   '<div class="stack">'+
+    '<div class="plate"><div class="seal" lang="ja" aria-hidden="true">'+c.s+'</div><div><p class="eyebrow">Tu tipo de Nen</p><h1 tabindex="-1">'+c.n+'</h1><p class="plate-sub">'+sub+(r.leanDeg>=5&&r.type!=="esp"?" · "+lt.short:"")+'</p></div></div>'+
+    '<div class="chips"><span class="chip">Claridad '+r.clarity+'</span><span class="chip">'+cohTxt+'</span><span class="chip">Dominio '+pct(r.dominio)+'</span></div>'+
+    '<p class="lead">'+c.nat+'</p><p class="note">'+clar+'</p>'+
+   '</div>'+
+
+   '<section class="sec"><h2>Adivinación del agua</h2><div class="two">'+glassSVG(r.type)+'<div class="stack"><p>'+c.agua+'</p><p class="note">Es la única prueba segura dentro de la obra: una hoja sobre un vaso lleno y Ren con las manos alrededor. Este dibujo muestra lo que le correspondería a tu tipo.</p></div></div></section>'+
+
+   '<section class="sec"><h2>Tu posición en el hexagrama</h2>'+
+    '<figure>'+hexSVG({type:r.type,angle:r.angle,frac:r.dominio,showEff:true,label:"Hexagrama del Nen. Tipo "+c.n+", posición "+lt.short+", dominio "+Math.round(r.dominio*100)+" por ciento."})+
+    '<div class="key"><span><i class="k-type"></i>tipo innato</span><span><i class="k-lean"></i>inclinación</span><span><i class="k-pos"></i>tu posición</span></div>'+
+    '<figcaption>Los porcentajes son la eficiencia de tu tipo en cada categoría según el manga. La Especialización es todo o nada: quien no nace con ella no puede usarla. Los anillos marcan el 25, 50 y 75 % de dominio.</figcaption></figure>'+
+    '<dl class="read"><dt>Ángulo</dt><dd><b>'+(r.leanDeg<5?"En el vértice":lt.short.charAt(0).toUpperCase()+lt.short.slice(1))+'</b><br>'+lt.long+'</dd>'+
+    '<dt>Distancia</dt><dd><b>'+pct(r.dominio)+' del radio</b><br>Es tu dominio de los cuatro principios: '+domWord(r.dominio)+'. En el centro el aura se escapa sin control; en el borde se sostiene sola.</dd></dl>'+espNote+
+   '</section>'+
+
+   '<section class="sec"><h2>Afinidad innata</h2><p class="note">Reparto de los puntos de las partes I y II entre las cinco categorías que se pueden entrenar.</p>'+barsHTML(aff)+'<p class="gate">'+gate+'</p></section>'+
+
+   '<section class="sec"><h2>Los cuatro principios</h2><p class="note">Tu estado de las últimas cuatro semanas. El más bajo es el que frena a los demás.</p>'+barsHTML(prb,true)+
+    '<div class="stack"><h3>Empieza por '+PR[r.weakest].n+' <span lang="ja">('+PR[r.weakest].k+')</span></h3><p>'+PR[r.weakest].fix+'</p></div></section>'+
+
+   '<section class="sec"><h2>Práctica actual</h2><dl class="read"><dt>Rendimiento</dt><dd><b>'+pct(r.effNow)+'</b><br>Es lo que rinde tu esfuerzo de los últimos tres meses, pesando cada categoría por la eficiencia de tu tipo.</dd></dl>'+barsHTML(prac)+'<p>'+pracMsg+'</p></section>'+
+
+   '<section class="sec"><h2>Tu Hatsu</h2><p>'+c.hatsu+'</p><dl class="read"><dt>Condición</dt><dd>'+c.voto+'</dd><dt>Punto débil</dt><dd>'+c.sombra+'</dd><dt>En la obra</dt><dd>'+c.who+'.</dd></dl>'+
+    '<p class="note">El manga insiste en que una buena habilidad sale del carácter y se siente correcta para quien la crea. Copiar la de otro no lleva a dominarla.</p></section>'+
+
+   '<details><summary>Cómo se calculó</summary><ol>'+
+    '<li><b>Tipo.</b> Cada elección de la parte I vale 3 puntos para su categoría. Cada frase de la parte II suma entre −3 y +3. Gana la categoría con más puntos; la claridad es la ventaja sobre la segunda (alta desde 12 puntos, media desde 6).</li>'+
+    '<li><b>Especialización.</b> No compite por puntos. Solo sale si eliges al menos 2 de las 4 respuestas de especialista en la parte I y además sumas +5 o más en sus 4 frases de la parte II.</li>'+
+    '<li><b>Ángulo.</b> Compara tus dos categorías vecinas mezclando un 40 % de afinidad innata y un 60 % de práctica reciente. El resultado desplaza el punto hasta 30° desde tu vértice.</li>'+
+    '<li><b>Distancia al centro.</b> Media de los cuatro principios, tres frases cada uno, con tres de ellas puntuadas al revés.</li>'+
+    '<li><b>Rendimiento.</b> Reparto de tu práctica multiplicado por la eficiencia del manga: 100 % en tu categoría, 80 % en las vecinas, 60 % en las siguientes y 40 % en la opuesta.</li>'+
+    '<li><b>Qué es del manga y qué no.</b> Las categorías, el hexagrama, las eficiencias, los rasgos de Hisoka y la idea de que la inclinación cambia vienen de la obra. Las preguntas, la traducción de cada categoría a actividades reales y el uso de la distancia al centro como medida de dominio son decisiones de este test.</li>'+
+   '</ol></details>'+
+
+   '<div class="stack"><div class="btn-row"><button class="btn" data-act="copy">Copiar resultado</button><button class="btn ghost" data-act="review">Revisar respuestas</button><button class="btn ghost" data-act="restart">Repetir el test</button></div><div id="aux"></div>'+
+   '<p class="note">Tu posición cambia: vuelve a responder las partes III y IV dentro de unos meses y compara. El trasfondo de cada idea está en el <a href="'+DOC_URL+'" target="_blank" rel="noopener">informe de investigación</a>.</p></div>'+
+  '</div>';
+}
+function fmt(x){return (Math.round(x*10)/10).toString().replace(".",",");}
+
+function render(focus){
+  if(state.view==="intro")renderIntro();
+  else if(state.view==="res")renderResults();
+  else renderStep(focus);
+  if(focus&&state.view!=="q"){var h=app.querySelector("h1");if(h){try{h.focus({preventScroll:true});}catch(e){}}window.scrollTo(0,0);}
+}
+function go(view,step){state.view=view;if(step!=null)state.step=step;save();render(true);}
+
+var advTimer=null;
+app.addEventListener("change",function(ev){
+  var t=ev.target;if(!t||t.type!=="radio")return;
+  var st=STEPS[state.step];
+  state.a[t.name]=st.t==="lk"?parseInt(t.value,10):t.value;save();
+  var nb=app.querySelector('[data-act="next"]');if(nb)nb.disabled=!stepDone();
+  var pn=app.querySelector(".prog-n");if(pn)pn.textContent=countAnswered()+" / "+TOTAL;
+  if(st.t==="fc"){clearTimeout(advTimer);advTimer=setTimeout(function(){if(state.view==="q"&&stepDone())next();},280);}
+});
+function next(){if(!stepDone())return;if(state.step>=STEPS.length-1){if(countAnswered()>=TOTAL)go("res");else go("q",firstOpenStep());}else go("q",state.step+1);}
+app.addEventListener("click",function(ev){
+  var b=ev.target.closest?ev.target.closest("[data-act]"):null;if(!b)return;
+  var act=b.getAttribute("data-act"),aux=document.getElementById("aux");
+  clearTimeout(advTimer);
+  if(act==="start")go("q",0);
+  else if(act==="resume")go("q",Math.min(firstOpenStep(),STEPS.length-1));
+  else if(act==="results")go("res");
+  else if(act==="review")go("q",0);
+  else if(act==="prev"){if(state.step===0)go("intro");else go("q",state.step-1);}
+  else if(act==="next")next();
+  else if(act==="restart"){
+    if(b.getAttribute("data-armed")==="1"){state.a={};state.step=0;state.seed=Math.floor(Math.random()*1e9);go("intro");}
+    else{b.setAttribute("data-armed","1");b.textContent="Confirmar: borrar mis respuestas";}
+  }
+  else if(act==="copy"){
+    var txt=summaryText(scoreNen(state.a));
+    var fallback=function(){if(!aux)return;aux.innerHTML='<label class="vh" for="copybox">Resultado en texto</label><textarea class="copybox" id="copybox" readonly></textarea><p class="toast">No se pudo copiar de forma automática. El texto está seleccionado: cópialo desde aquí.</p>';var ta=document.getElementById("copybox");ta.value=txt;ta.focus();ta.select();};
+    try{navigator.clipboard.writeText(txt).then(function(){if(aux)aux.innerHTML='<p class="toast" role="status">Resultado copiado.</p>';},fallback);}catch(e){fallback();}
+  }
+});
+
+function start(data){
+  load();
+  if(data&&data.a){state.a=data.a;state.step=data.step||0;state.seed=data.seed||state.seed;state.view=data.view||"intro";}
+  else state.view=countAnswered()>=TOTAL?"res":"intro";
+  if(state.step>=STEPS.length)state.step=STEPS.length-1;
+  render(false);
+}
+var hot=window.claude&&window.claude.hot;
+if(hot&&hot.snapshot){try{hot.snapshot(function(){return {a:state.a,step:state.step,seed:state.seed,view:state.view};});}catch(e){}}
+if(hot&&hot.ready)hot.ready(start);else start((hot&&hot.data)||{});
+})();
+</script>
+
+</body></html>
